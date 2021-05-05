@@ -5,6 +5,7 @@ localStorage.setItem("client_id", client_id);
 let bpmSlider = document.querySelector("#bpm-slider");
 let bpmOutput = document.querySelector(".bpm-output");
 let bpmCheck = document.querySelector("#bpm-check");
+let songs = [];
 
 function onPageLoad(){
     console.log("Refresh")
@@ -118,16 +119,20 @@ function requestTrack(tracks){
         if ( this.status == 200 ){
             let data = JSON.parse(this.responseText);
             console.log(data.audio_features)
-            let songs = [];
+            
             for(let j = 0; j<20; j++){
-                
                 console.log("Song title: " + tracks[j].name + " Artist: " + tracks[j].artists[0].name);
-                songs[j] = document.createElement("div")
-                songs[j].textContent = "";
+                if(songs[j] === undefined){
+                    songs[j] = document.createElement("div")
+                    songs[j].addEventListener('click', function(){
+                        document.querySelector("iframe").src = "https://open.spotify.com/embed/track/" + tracks[j].id;
+                    })
+                    document.body.appendChild(songs[j]);
+                }
+                
                 songs[j].textContent = "Song title: " + tracks[j].name + ", Artist: " + tracks[j].artists[0].name + " " + data.audio_features[j].tempo
-                document.body.appendChild(songs[j]);
 
-                document.querySelector("iframe").src = "https://open.spotify.com/embed/track/" + tracks[j].id;
+                
 
             }
 
