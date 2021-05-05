@@ -1,0 +1,12 @@
+
+
+.song{
+    font-size: 16pt;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+#player{
+    width: 100vw; 
+}

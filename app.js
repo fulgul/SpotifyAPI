@@ -124,8 +124,11 @@ function requestTrack(tracks){
                 console.log("Song title: " + tracks[j].name + " Artist: " + tracks[j].artists[0].name);
                 if(songs[j] === undefined){
                     songs[j] = document.createElement("div")
+                    
+                    songs[j].classList.add("song")
                     songs[j].addEventListener('click', function(){
-                        document.querySelector("iframe").src = "https://open.spotify.com/embed/track/" + tracks[j].id;
+                        document.querySelector("#player").src = "https://open.spotify.com/embed/track/" + tracks[j].id;
+                        
                     })
                     document.body.appendChild(songs[j]);
                 }
