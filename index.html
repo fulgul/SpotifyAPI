@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">    
+    <script defer src="app.js"></script>
+</head>
+<body onload="onPageLoad()">
+    <div>
+        <input class="button-auth" type="button" value="Request Authorization">
+        <input class="button-track" type="button" value="Request Tracks">
+        <input type="text" id="searchbox">
+        <div class="slidecontainer">
+            <input type="checkbox" name="bpm-check" id="bpm-check">
+            <input type="range" min="60" max="200" value="120" class="slider" id="bpm-slider">
+            <div class="bpm-output"></div>
+          </div>
+    </div>
+
+    <iframe src="" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+</body>
+</html>
