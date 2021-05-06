@@ -129,8 +129,9 @@ function requestTrack(tracks){
                     songs[j].addEventListener('click', function(){
                         document.querySelector("#player").src = "https://open.spotify.com/embed/track/" + tracks[j].id;
                         
+                        
                     })
-                    document.body.appendChild(songs[j]);
+                    document.querySelector(".tracks-container").appendChild(songs[j]);
                 }
                 
                 songs[j].textContent = "Song title: " + tracks[j].name + ", Artist: " + tracks[j].artists[0].name + " " + data.audio_features[j].tempo

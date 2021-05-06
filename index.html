@@ -5,22 +5,33 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">    
     <script defer src="app.js"></script>
 </head>
 <body onload="onPageLoad()">
-    <div>
-        <input class="button-auth" type="button" value="Request Authorization">
-        <input class="button-track" type="button" value="Request Tracks">
-        <input type="text" id="searchbox">
-        <div class="slidecontainer">
-            <input type="checkbox" name="bpm-check" id="bpm-check">
-            <input type="range" min="60" max="200" value="120" class="slider" id="bpm-slider">
-            <div class="bpm-output"></div>
-          </div>
+    <div class="container">
+        <div class="auth">
+            <input class="btn button-auth" type="button" value="Spotify Login">
+        </div>
+        <div class="request-container">
+            <div class="left-container">
+                <input class="btn button-track" type="button" value="Request Songs">
+                <div class="option-container">
+                    <div class="slidecontainer">
+                        <input type="checkbox" name="bpm-check" id="bpm-check">
+                        <input type="range" min="60" max="200" value="120" class="slider" id="bpm-slider">
+                        <div class="bpm-output"></div>
+                    </div>
+                </div>
+                <iframe id="player" src="" width="" height="" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+            </div>
+            <div class="tracks-container">
+
+            </div>
+        </div>
     </div>
 
-    <iframe id="player" src="" width="" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+    
 </body>
 </html>

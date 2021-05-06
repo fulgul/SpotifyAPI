@@ -1,4 +1,51 @@
+body{
+    background:#FFA69E;
+}
 
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 50%;
+}
+
+.request-container{
+    height: 60vh;
+    background-color: #FF7E6B;
+    justify-content: space-between;
+}
+
+.left-container{
+    width: 50%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.tracks-container{
+    width: 50%;
+    overflow-y: scroll;
+    margin: 10px;
+}
+
+.auth, .request-container, .option-container{
+    display: flex;
+    margin: 20px 0;
+}
+
+.button-auth{
+    width: 100%;
+    height: 48px;
+    background-color: #8C5E58;
+
+}
+
+.button-track{
+    background-color: #A9F0D1;
+    height: 48px;
+    margin: 10px 10px;
+}
 
 .song{
     font-size: 16pt;
@@ -8,5 +55,7 @@
 }
 
 #player{
-    width: 100vw; 
+    
+    width: 100%; 
+    height: 50%;
 }
