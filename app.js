@@ -5,22 +5,63 @@ localStorage.setItem("client_id", client_id);
 let bpmSlider = document.querySelector("#bpm-slider");
 let bpmOutput = document.querySelector(".bpm-output");
 let bpmCheck = document.querySelector("#bpm-check");
+let playlists;
 let songs = [];
+let songContainers = [];
+let playButtons = [];
+let addButton = [];
+let addToPlaylist;
+let player =  document.createElement("iframe");
+player.classList.add("player");
+player.allow = "encrypted-media";
+document.querySelector(".left-container").appendChild(player);
 
 function onPageLoad(){
     console.log("Refresh")
     if(window.location.href.length > 60){
         localStorage.setItem("access_token", location.hash.substr(1).split('&')[0].split('=')[1]);
         window.location.href = "http://127.0.0.1:5500/index.html";
+        
     }
     access_token = localStorage.getItem("access_token");
     console.log(access_token)
+    let request = new XMLHttpRequest();
+    request.open("GET", "https://api.spotify.com/v1/me/playlists", true);
+    request.setRequestHeader('Content-Type', 'application/json');
+    request.setRequestHeader('Authorization', 'Bearer ' + access_token);
+    request.send();
+    request.onload = function(){
+        if ( this.status == 200 ){
+            let data = JSON.parse(this.responseText);
+            let playlists = [];
+            for(let i = 0; i<data.items.length; i++){
+                playlists[i] = document.createElement("option"); 
+                playlists[i].value = data.items[i].id;
+                playlists[i].innerHTML = data.items[i].name;
+                document.querySelector("select").appendChild(playlists[i]);
+            }
+            document.querySelector("select").addEventListener("change", function(){
+                console.log(document.querySelector("select").value);
+                addToPlaylist = document.querySelector("select").value;
+            })
+            console.log(data.items)
+
+        }
+        else {
+            console.log(this.responseText);
+            alert(this.responseText);
+        }
+    }
+    
+
+    //playlists = MakeRequest("https://api.spotify.com/v1/me/playlists");
+    //console.log(playlists);
 
 
 }
 
 document.querySelector(".button-auth").addEventListener("click", function(){
-    location = "https://accounts.spotify.com/authorize?client_id=" + client_id + "&redirect_uri=http://127.0.0.1:5500/index.html&scope=user-read-private%20user-read-email%20user-top-read&response_type=token"
+    location = "https://accounts.spotify.com/authorize?client_id=" + client_id + "&redirect_uri=http://127.0.0.1:5500/index.html&scope=user-read-private%20user-read-email%20user-top-read%20playlist-modify-private%20playlist-modify-public&response_type=token"
     
 })
 
@@ -121,22 +162,44 @@ function requestTrack(tracks){
             console.log(data.audio_features)
             
             for(let j = 0; j<20; j++){
-                console.log("Song title: " + tracks[j].name + " Artist: " + tracks[j].artists[0].name);
                 if(songs[j] === undefined){
-                    songs[j] = document.createElement("div")
-                    songs[j].classList.add("song")
-                    songs[j].addEventListener('click', function(){
-                        debugger;
-                        document.querySelector("#player").src = "https://open.spotify.com/embed/track/" + tracks[j].id;
-                        
+                    songContainers[j] = document.createElement("div");
+                    songContainers[j].classList.add("song-container");
 
-                        document.querySelector(".b8").click()
-                    })
-                    document.querySelector(".tracks-container").appendChild(songs[j]);
+                    playButtons[j] = document.createElement("i");
+                    playButtons[j].classList.add("far", "fa-play-circle")
+                    
+
+                    songs[j] = document.createElement("div");
+                    songs[j].classList.add("song");
+
+                    addButton[j] = document.createElement("i");
+                    addButton[j].classList.add("fas", "fa-check-circle");
+                    
+                    
+
+                    songContainers[j].appendChild(playButtons[j]);
+                    songContainers[j].appendChild(songs[j]);
+                    songContainers[j].appendChild(addButton[j]);
+
+                    document.querySelector(".tracks-container").appendChild(songContainers[j]);
                 }
                 
                 songs[j].textContent = "Song title: " + tracks[j].name + ", Artist: " + tracks[j].artists[0].name + " " + Math.round(data.audio_features[j].tempo);
+                playButtons[j].addEventListener('click', function(){
+                    player.src = "https://open.spotify.com/embed/track/" + tracks[j].id;
+                })
+                
 
+                addButton[j].addEventListener('click', function(){
+                    if(addToPlaylist != undefined){
+                        AddTrack("POST", "https://api.spotify.com/v1/playlists/" + addToPlaylist + "/tracks?uris=" + tracks[j].uri)
+                        addButton[j].style.display = "none";
+                    }
+                    else{
+                        console.log("Please select a playlist to add to");
+                    }
+                })
                 
 
             }
@@ -149,23 +212,15 @@ function requestTrack(tracks){
     }
 }
 
-function searchTrack(query){
+function AddTrack(method, query){
     let request = new XMLHttpRequest();
-    request.open("GET", "https://api.spotify.com/v1/search?q=" + query + "&type=track", true);
+    request.open(method, query, true);
     request.setRequestHeader('Content-Type', 'application/json');
     request.setRequestHeader('Authorization', 'Bearer ' + access_token);
     request.send();
     request.onload = function(){
-        if ( this.status == 200 ){
-            let data = JSON.parse(this.responseText);
-            console.log(data.tracks.items);
-            let songs = []
-            for(let i = 0; i<20; i++){
-                console.log("Song title: " + data.tracks.items[i].name + " Artist: " + data.tracks.items[i].artists[0].name);
-                songs[i] = document.createElement("div")
-                songs[i].textContent = "Song title: " + data.tracks.items[i].name + ", Artist: " + data.tracks.items[i].artists[0].name
-                document.body.appendChild(songs[i]);
-            }
+        if ( this.status == 201 ){
+            console.log("Track added to playlist")
 
         }
         else {
