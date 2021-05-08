@@ -12,6 +12,7 @@ let playButtons = [];
 let addButton = [];
 let addToPlaylist;
 let player =  document.createElement("iframe");
+let select;
 player.classList.add("player");
 player.allow = "encrypted-media";
 document.querySelector(".left-container").appendChild(player);
@@ -37,18 +38,22 @@ function onPageLoad(){
             if ( this.status == 200 ){
                 let data = JSON.parse(this.responseText);
                 let playlists = [];
+                select = document.createElement("select")
+                select.size = 0;
+                
+                document.querySelector(".select").appendChild(select);
                 for(let i = 0; i<data.items.length; i++){
                     playlists[i] = document.createElement("option"); 
                     playlists[i].value = data.items[i].id;
                     playlists[i].innerHTML = data.items[i].name;
                     document.querySelector("select").appendChild(playlists[i]);
                 }
+                addToPlaylist = data.items[0].id;
                 document.querySelector("select").addEventListener("change", function(){
                     console.log(document.querySelector("select").value);
                     addToPlaylist = document.querySelector("select").value;
                 })
                 console.log(data.items)
-
             }
             else {
                 Authenticate();

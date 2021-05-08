@@ -1,5 +1,5 @@
 body{
-    background: #444444;
+    background: #121212;
 }
 
 .container{
@@ -11,7 +11,7 @@ body{
 
 .request-container{
     height: 60vh;
-    background-color: grey;
+    background-color: #606060;
     justify-content: space-between;
 }
 
@@ -21,6 +21,10 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+
+select, .slidecontainer{
+    margin-left: 10px;
 }
 
 .tracks-container{
@@ -59,7 +63,7 @@ body{
 
 .player{
     
-    width: 100%; 
+    width: 95%; 
     height: 50%;
 }
 
