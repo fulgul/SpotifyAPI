@@ -25,51 +25,44 @@ function onPageLoad(){
     }
     access_token = localStorage.getItem("access_token");
     console.log(access_token)
-    let request = new XMLHttpRequest();
-    request.open("GET", "https://api.spotify.com/v1/me/playlists", true);
-    request.setRequestHeader('Content-Type', 'application/json');
-    request.setRequestHeader('Authorization', 'Bearer ' + access_token);
-    request.send();
-    request.onload = function(){
-        if ( this.status == 200 ){
-            let data = JSON.parse(this.responseText);
-            let playlists = [];
-            for(let i = 0; i<data.items.length; i++){
-                playlists[i] = document.createElement("option"); 
-                playlists[i].value = data.items[i].id;
-                playlists[i].innerHTML = data.items[i].name;
-                document.querySelector("select").appendChild(playlists[i]);
-            }
-            document.querySelector("select").addEventListener("change", function(){
-                console.log(document.querySelector("select").value);
-                addToPlaylist = document.querySelector("select").value;
-            })
-            console.log(data.items)
+    if (access_token != undefined){
+        document.querySelector(".request-container").classList.remove("hide");
+        document.querySelector(".auth").classList.add("hide");
+        let request = new XMLHttpRequest();
+        request.open("GET", "https://api.spotify.com/v1/me/playlists", true);
+        request.setRequestHeader('Content-Type', 'application/json');
+        request.setRequestHeader('Authorization', 'Bearer ' + access_token);
+        request.send();
+        request.onload = function(){
+            if ( this.status == 200 ){
+                let data = JSON.parse(this.responseText);
+                let playlists = [];
+                for(let i = 0; i<data.items.length; i++){
+                    playlists[i] = document.createElement("option"); 
+                    playlists[i].value = data.items[i].id;
+                    playlists[i].innerHTML = data.items[i].name;
+                    document.querySelector("select").appendChild(playlists[i]);
+                }
+                document.querySelector("select").addEventListener("change", function(){
+                    console.log(document.querySelector("select").value);
+                    addToPlaylist = document.querySelector("select").value;
+                })
+                console.log(data.items)
 
-        }
-        else {
-            console.log(this.responseText);
-            alert(this.responseText);
+            }
+            else {
+                Authenticate();
+            }
         }
     }
-    
-
-    //playlists = MakeRequest("https://api.spotify.com/v1/me/playlists");
-    //console.log(playlists);
-
-
 }
 
 document.querySelector(".button-auth").addEventListener("click", function(){
-    location = "https://accounts.spotify.com/authorize?client_id=" + client_id + "&redirect_uri=http://127.0.0.1:5500/index.html&scope=user-read-private%20user-read-email%20user-top-read%20playlist-modify-private%20playlist-modify-public&response_type=token"
+    Authenticate();
     
 })
 
 document.querySelector(".button-track").addEventListener("click", function(){
-    //let query = document.querySelector("#searchbox").value
-    //searchTrack(query);
-    //requestTrack("1BSncOsSJPQkpl29QM0ipj")
-
     getRecommendations();
 })
 
@@ -87,10 +80,11 @@ bpmSlider.oninput = function() {
     bpmOutput.innerHTML = this.value;
   }
 
+function Authenticate(){
+    location = "https://accounts.spotify.com/authorize?client_id=" + client_id + "&redirect_uri=http://127.0.0.1:5500/index.html&scope=user-read-private%20user-read-email%20user-top-read%20playlist-modify-private%20playlist-modify-public&response_type=token"
+}
 
 function getRecommendations(){
-    
-
     let request = new XMLHttpRequest();
     request.open("GET", "https://api.spotify.com/v1/me/top/artists?limit=5", true);
     request.setRequestHeader('Content-Type', 'application/json');

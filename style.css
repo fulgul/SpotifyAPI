@@ -69,3 +69,8 @@ body{
     margin-right: 4px;
 }
 
+.hide{
+    display: none;
+    pointer-events: none;
+}
+
