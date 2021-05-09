@@ -33,7 +33,7 @@ select, .slidecontainer{
     margin: 10px;
 }
 
-.song-container{
+.song-container, .info-container{
     display: flex;
     flex-wrap: nowrap;
 }
@@ -56,9 +56,23 @@ select, .slidecontainer{
     margin: 10px 10px;
 }
 
+.info{
+    width: 36.4%;
+    margin: 0 0 0 24px;
+}
+
 .song{
     font-size: 16pt;
     width: 80%;
+    display: flex;
+}
+
+.song-title{
+    width: 50%;
+}
+
+.song-artist{
+    width: 50%;
 }
 
 .player{
@@ -69,8 +83,10 @@ select, .slidecontainer{
 
 .far, .fas{
     cursor: pointer;
-    margin-top: 8px;
+    margin-top: 6px;
     margin-right: 4px;
+    margin-left: 4px;
+    border: transparent solid 4px;
 }
 
 .hide{

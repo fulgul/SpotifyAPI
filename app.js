@@ -7,10 +7,16 @@ let bpmOutput = document.querySelector(".bpm-output");
 let bpmCheck = document.querySelector("#bpm-check");
 let playlists;
 let songs = [];
-let songContainers = [];
-let playButtons = [];
-let addButton = [];
+let songContainers = []
+let playButtons = []
+let addButton = []
+let songTitle = []
+let songArtist = []
+let songTempo = [];
 let addToPlaylist;
+let tracksInfoContainer;
+let tracksTitle;
+let tracksArtist;
 let player =  document.createElement("iframe");
 let select;
 player.classList.add("player");
@@ -159,7 +165,21 @@ function requestTrack(tracks){
         if ( this.status == 200 ){
             let data = JSON.parse(this.responseText);
             console.log(data.audio_features)
-            
+            tracksInfoContainer = document.createElement("div");
+            tracksInfoContainer.classList.add("info-container");
+
+            tracksTitle = document.createElement("div");
+            tracksTitle.textContent = "Title";
+            tracksTitle.classList.add("info");
+            tracksArtist = document.createElement("div");
+            tracksArtist.textContent = "Artist";
+            tracksArtist.classList.add("info");
+
+            tracksInfoContainer.appendChild(tracksTitle);
+            tracksInfoContainer.appendChild(tracksArtist);
+
+            document.querySelector(".tracks-container").appendChild(tracksInfoContainer)
+
             for(let j = 0; j<20; j++){
                 if(songs[j] === undefined){
                     songContainers[j] = document.createElement("div");
@@ -175,7 +195,15 @@ function requestTrack(tracks){
                     addButton[j] = document.createElement("i");
                     addButton[j].classList.add("fas", "fa-check-circle");
                     
-                    
+                    songTitle[j] = document.createElement("div");
+                    songTitle[j].classList.add("song-title");
+                    songTitle[j].textContent = tracks[j].name;
+                    songs[j].appendChild(songTitle[j]);
+
+                    songArtist[j] = document.createElement("div");
+                    songArtist[j].classList.add("song-artist");
+                    songArtist[j].textContent = tracks[j].artists[0].name
+                    songs[j].appendChild(songArtist[j]);
 
                     songContainers[j].appendChild(playButtons[j]);
                     songContainers[j].appendChild(songs[j]);
@@ -184,7 +212,7 @@ function requestTrack(tracks){
                     document.querySelector(".tracks-container").appendChild(songContainers[j]);
                 }
                 
-                songs[j].textContent = "Song title: " + tracks[j].name + ", Artist: " + tracks[j].artists[0].name + " " + Math.round(data.audio_features[j].tempo);
+                //songs[j].textContent = "Song title: " + tracks[j].name + ", Artist: " + tracks[j].artists[0].name + " " + Math.round(data.audio_features[j].tempo);
                 playButtons[j].addEventListener('click', function(){
                     player.src = "https://open.spotify.com/embed/track/" + tracks[j].id;
                 })
