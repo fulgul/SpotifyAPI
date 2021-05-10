@@ -1,96 +1,106 @@
-body{
-    background: #121212;
+body {
+  background: #121212;
 }
 
-.container{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 50%;
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 50%;
+  max-width: 100%;
 }
 
-.request-container{
-    height: 60vh;
-    background-color: #606060;
-    justify-content: space-between;
+.request-container {
+  height: 60vh;
+  background-color: #404040;
+  justify-content: space-between;
 }
 
-.left-container{
-    width: 50%;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+.left-container {
+  width: 50%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-select, .slidecontainer{
-    margin-left: 10px;
+select,
+.slidecontainer {
+  margin-left: 10px;
 }
 
-.tracks-container{
-    width: 50%;
-    overflow-y: scroll;
-    margin: 10px;
+.tracks-container {
+  background-color: #121212;
+  color: white;
+  width: 50%;
+  overflow-y: scroll;
 }
 
-.song-container, .info-container{
-    display: flex;
-    flex-wrap: nowrap;
+.song-container,
+.info-container {
+  display: flex;
+  flex-wrap: nowrap;
 }
 
-.auth, .request-container, .option-container{
-    display: flex;
-    margin: 20px 0;
+.auth,
+.request-container,
+.option-container {
+  display: flex;
+  margin: 20px 0;
 }
 
-.button-auth{
-    width: 100%;
-    height: 48px;
-    background-color: #8C5E58;
-
+.button-auth {
+  width: 100%;
+  height: 48px;
+  background-color: #8c5e58;
 }
 
-.button-track{
-    background-color: #A9F0D1;
-    height: 48px;
-    margin: 10px 10px;
+.button-track {
+  background-color: rgb(30, 129, 221);
+  color: white;
+  height: 15%;
+  width: 45%;
+  margin: 10px 10px;
 }
 
-.info{
-    width: 36.4%;
-    margin: 0 0 0 24px;
+.info {
+  width: 34%;
+  margin-left: 47px;
+  margin-bottom: 15px;
 }
 
-.song{
-    font-size: 16pt;
-    width: 80%;
-    display: flex;
+.song {
+  font-size: 12pt;
+  width: 80%;
+  display: flex;
+  margin-left: 15px;
 }
 
-.song-title{
-    width: 50%;
+.song-title {
+  width: 50%;
 }
 
-.song-artist{
-    width: 50%;
+.song-artist {
+  width: 30%;
+  margin-left: 20px;
 }
 
-.player{
-    
-    width: 95%; 
-    height: 50%;
+.player {
+  width: 95%;
+  height: 80px;
 }
 
-.far, .fas{
-    cursor: pointer;
-    margin-top: 6px;
-    margin-right: 4px;
-    margin-left: 4px;
-    border: transparent solid 4px;
+.far,
+.fas {
+  cursor: pointer;
+  margin-top: 3px;
+  margin-right: 4px;
+  margin-left: 4px;
+  border: transparent solid 4px;
 }
 
-.hide{
-    display: none;
-    pointer-events: none;
+.hide {
+  display: none;
+  pointer-events: none;
 }
-

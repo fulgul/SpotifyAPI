@@ -30,8 +30,7 @@ function onPageLoad() {
       "access_token",
       location.hash.substr(1).split("&")[0].split("=")[1]
     );
-    alert("test");
-    window.location.href = "https://fulgul.github.io/SpotifyAPI/";
+    window.location.href = "http://127.0.0.1:5500/SpotifyAPI/index.html";
   }
   access_token = localStorage.getItem("access_token");
   console.log(access_token);
@@ -97,7 +96,7 @@ function Authenticate() {
   location =
     "https://accounts.spotify.com/authorize?client_id=" +
     client_id +
-    "&redirect_uri=https://fulgul.github.io/SpotifyAPI/&scope=user-read-private%20user-read-email%20user-top-read%20playlist-modify-private%20playlist-modify-public&response_type=token";
+    "&redirect_uri=http://127.0.0.1:5500/SpotifyAPI/index.html&scope=user-read-private%20user-read-email%20user-top-read%20playlist-modify-private%20playlist-modify-public&response_type=token";
 }
 
 function getRecommendations() {
@@ -170,23 +169,24 @@ function requestTrack(tracks) {
     if (this.status == 200) {
       let data = JSON.parse(this.responseText);
       console.log(data.audio_features);
-      tracksInfoContainer = document.createElement("div");
-      tracksInfoContainer.classList.add("info-container");
+      if (tracksInfoContainer === undefined) {
+        tracksInfoContainer = document.createElement("div");
+        tracksInfoContainer.classList.add("info-container");
 
-      tracksTitle = document.createElement("div");
-      tracksTitle.textContent = "Title";
-      tracksTitle.classList.add("info");
-      tracksArtist = document.createElement("div");
-      tracksArtist.textContent = "Artist";
-      tracksArtist.classList.add("info");
+        tracksTitle = document.createElement("div");
+        tracksTitle.textContent = "TITLE";
+        tracksTitle.classList.add("info");
+        tracksArtist = document.createElement("div");
+        tracksArtist.textContent = "ARTIST";
+        tracksArtist.classList.add("info");
 
-      tracksInfoContainer.appendChild(tracksTitle);
-      tracksInfoContainer.appendChild(tracksArtist);
+        tracksInfoContainer.appendChild(tracksTitle);
+        tracksInfoContainer.appendChild(tracksArtist);
 
-      document
-        .querySelector(".tracks-container")
-        .appendChild(tracksInfoContainer);
-
+        document
+          .querySelector(".tracks-container")
+          .appendChild(tracksInfoContainer);
+      }
       for (let j = 0; j < 20; j++) {
         if (songs[j] === undefined) {
           songContainers[j] = document.createElement("div");
@@ -203,12 +203,12 @@ function requestTrack(tracks) {
 
           songTitle[j] = document.createElement("div");
           songTitle[j].classList.add("song-title");
-          songTitle[j].textContent = tracks[j].name;
+
           songs[j].appendChild(songTitle[j]);
 
           songArtist[j] = document.createElement("div");
           songArtist[j].classList.add("song-artist");
-          songArtist[j].textContent = tracks[j].artists[0].name;
+
           songs[j].appendChild(songArtist[j]);
 
           songContainers[j].appendChild(playButtons[j]);
@@ -219,6 +219,9 @@ function requestTrack(tracks) {
             .querySelector(".tracks-container")
             .appendChild(songContainers[j]);
         }
+
+        songTitle[j].textContent = tracks[j].name;
+        songArtist[j].textContent = tracks[j].artists[0].name;
 
         //songs[j].textContent = "Song title: " + tracks[j].name + ", Artist: " + tracks[j].artists[0].name + " " + Math.round(data.audio_features[j].tempo);
         playButtons[j].addEventListener("click", function () {
