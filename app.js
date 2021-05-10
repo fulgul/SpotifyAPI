@@ -30,7 +30,8 @@ function onPageLoad() {
       "access_token",
       location.hash.substr(1).split("&")[0].split("=")[1]
     );
-    window.location.href = "http://127.0.0.1:5500/index.html";
+    alert("test");
+    window.location.href = "https://fulgul.github.io/SpotifyAPI/";
   }
   access_token = localStorage.getItem("access_token");
   console.log(access_token);
@@ -96,7 +97,7 @@ function Authenticate() {
   location =
     "https://accounts.spotify.com/authorize?client_id=" +
     client_id +
-    "&redirect_uri=http://127.0.0.1:5500/index.html&scope=user-read-private%20user-read-email%20user-top-read%20playlist-modify-private%20playlist-modify-public&response_type=token";
+    "&redirect_uri=https://fulgul.github.io/SpotifyAPI/&scope=user-read-private%20user-read-email%20user-top-read%20playlist-modify-private%20playlist-modify-public&response_type=token";
 }
 
 function getRecommendations() {
