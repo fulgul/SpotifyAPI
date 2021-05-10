@@ -96,7 +96,7 @@ function Authenticate() {
   location =
     "https://accounts.spotify.com/authorize?client_id=" +
     client_id +
-    "&redirect_uri=http://127.0.0.1:5500/SpotifyAPI/index.html&scope=user-read-private%20user-read-email%20user-top-read%20playlist-modify-private%20playlist-modify-public&response_type=token";
+    "&redirect_uri=http://127.0.0.1:5500/SpotifyAPI/index.html&scope=user-read-private%20user-read-email%20user-top-read%20playlist-modify-private%20playlist-modify-public&response_type=token&show_dialog=true";
 }
 
 function getRecommendations() {
