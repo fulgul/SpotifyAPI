@@ -2,9 +2,6 @@ let client_id = "7c54b6c759954f4db09959ce5cebe0b0";
 
 localStorage.setItem("client_id", client_id);
 
-let bpmSlider = document.querySelector("#bpm-slider");
-let bpmOutput = document.querySelector(".bpm-output");
-let bpmCheck = document.querySelector("#bpm-check");
 let playlists;
 let songs = [];
 let songContainers = [];
@@ -30,7 +27,7 @@ function onPageLoad() {
       "access_token",
       location.hash.substr(1).split("&")[0].split("=")[1]
     );
-    window.location.href = "http://127.0.0.1:5500/SpotifyAPI/index.html";
+    window.location.href = "https://fulgul.github.io/SpotifyRecommendations/";
   }
   access_token = localStorage.getItem("access_token");
   console.log(access_token);
@@ -79,24 +76,11 @@ document.querySelector(".button-track").addEventListener("click", function () {
   getRecommendations();
 });
 
-bpmCheck.addEventListener("change", function () {
-  if (bpmCheck.checked == true) {
-    bpmOutput.innerHTML = bpmSlider.value;
-    bpmSlider.style.background;
-  } else {
-    bpmOutput.innerHTML = "";
-  }
-});
-
-bpmSlider.oninput = function () {
-  bpmOutput.innerHTML = this.value;
-};
-
 function Authenticate() {
   location =
     "https://accounts.spotify.com/authorize?client_id=" +
     client_id +
-    "&redirect_uri=http://127.0.0.1:5500/SpotifyAPI/index.html&scope=user-read-private%20user-read-email%20user-top-read%20playlist-modify-private%20playlist-modify-public&response_type=token&show_dialog=true";
+    "&redirect_uri=https://fulgul.github.io/SpotifyRecommendations/&scope=user-read-private%20user-read-email%20user-top-read%20playlist-modify-private%20playlist-modify-public&response_type=token&show_dialog=true";
 }
 
 function getRecommendations() {
@@ -130,9 +114,6 @@ function makeRecommendationsRequest(data) {
     query += data.items[i].id;
     query += "%2C";
   }
-  if (bpmCheck.checked == true) {
-    query += "&target_tempo=" + bpmSlider.value;
-  }
 
   let recommendationRequest = new XMLHttpRequest();
   recommendationRequest.open("GET", query, true);
@@ -145,7 +126,8 @@ function makeRecommendationsRequest(data) {
   recommendationRequest.onload = function () {
     if (this.status == 200) {
       let data = JSON.parse(this.responseText);
-      requestTrack(data.tracks);
+      console.log(data);
+      displayTracks(data.tracks);
     } else {
       console.log(this.responseText);
       alert(this.responseText);
@@ -153,22 +135,8 @@ function makeRecommendationsRequest(data) {
   };
 }
 
-function requestTrack(tracks) {
-  query = "https://api.spotify.com/v1/audio-features?ids=";
-  for (let i = 0; i < tracks.length; i++) {
-    query += tracks[i].id;
-    query += "%2C";
-  }
+function displayTracks(tracks) {
 
-  let request = new XMLHttpRequest();
-  request.open("GET", query, true);
-  request.setRequestHeader("Content-Type", "application/json");
-  request.setRequestHeader("Authorization", "Bearer " + access_token);
-  request.send();
-  request.onload = function () {
-    if (this.status == 200) {
-      let data = JSON.parse(this.responseText);
-      console.log(data.audio_features);
       if (tracksInfoContainer === undefined) {
         tracksInfoContainer = document.createElement("div");
         tracksInfoContainer.classList.add("info-container");
@@ -178,7 +146,7 @@ function requestTrack(tracks) {
         tracksTitle.classList.add("info");
         tracksArtist = document.createElement("div");
         tracksArtist.textContent = "ARTIST";
-        tracksArtist.classList.add("info");
+        tracksArtist.classList.add("artist-info")
 
         tracksInfoContainer.appendChild(tracksTitle);
         tracksInfoContainer.appendChild(tracksArtist);
@@ -226,6 +194,8 @@ function requestTrack(tracks) {
         //songs[j].textContent = "Song title: " + tracks[j].name + ", Artist: " + tracks[j].artists[0].name + " " + Math.round(data.audio_features[j].tempo);
         playButtons[j].addEventListener("click", function () {
           player.src = "https://open.spotify.com/embed/track/" + tracks[j].id;
+          url = tracks[j].album.images[0].url;
+          //document.querySelector("body").style.backgroundImage = `url(${url})`;
         });
 
         addButton[j].addEventListener("click", function () {
@@ -243,11 +213,6 @@ function requestTrack(tracks) {
           }
         });
       }
-    } else {
-      console.log(this.responseText);
-      alert(this.responseText);
-    }
-  };
 }
 
 function AddTrack(method, query) {

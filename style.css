@@ -1,18 +1,24 @@
-body {
+html, body {
   background: #121212;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .container {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 50%;
+  height: 100%;
   max-width: 100%;
 }
 
 .request-container {
   height: 60vh;
-  background-color: #404040;
+  
   justify-content: space-between;
 }
 
@@ -23,6 +29,14 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: midnightblue;
+  margin-right: 10px;
+  
+}
+
+.select{
+  color: white;
+  margin-top: 10px;
 }
 
 select,
@@ -50,8 +64,12 @@ select,
   margin: 20px 0;
 }
 
+.auth{
+  justify-content: center;
+}
+
 .button-auth {
-  width: 100%;
+  width: 180px;
   height: 48px;
   background-color: #8c5e58;
 }
@@ -59,15 +77,20 @@ select,
 .button-track {
   background-color: rgb(30, 129, 221);
   color: white;
-  height: 15%;
+  height: calc(60px + 8%);
   width: 45%;
   margin: 10px 10px;
 }
 
 .info {
-  width: 34%;
+  width: 28vw;
   margin-left: 47px;
+  margin-right: -47px;
   margin-bottom: 15px;
+}
+
+.artist-info{
+  margin-left: calc(-7% + -20px);
 }
 
 .song {
@@ -83,7 +106,7 @@ select,
 
 .song-artist {
   width: 30%;
-  margin-left: 20px;
+  margin-left: 22px;
 }
 
 .player {
@@ -103,4 +126,36 @@ select,
 .hide {
   display: none;
   pointer-events: none;
+}
+
+@media screen and (max-width: 1200px){
+  .container{
+    justify-content: flex-start;
+  }
+  .request-container{
+    display: block;
+    background-color: transparent;
+
+    height: 20%;
+  }
+  .left-container{
+    width: 100%;
+    height: 100%;
+  }
+  .tracks-container{
+    width: 100%;
+    height: max-content;
+    overflow-y: visible;
+    margin-left: auto;
+  }
+  .info-container{
+    margin-top: 20px;
+  }
+  .info{
+    width: 50vw;
+  }
+
+  .artist-info{
+    margin-left: calc(-24px + -2%);
+  }
 }
