@@ -80,7 +80,7 @@ function Authenticate() {
   location =
     "https://accounts.spotify.com/authorize?client_id=" +
     client_id +
-    "&redirect_uri=https://fulgul.github.io/SpotifyRecommendations/&scope=user-read-private%20user-read-email%20user-top-read%20playlist-modify-private%20playlist-modify-public&response_type=token&show_dialog=true";
+    "&redirect_uri=https://fulgul.github.io/SpotifyRecommendations/&scope=user-read-private%20user-read-email%20user-top-read%20playlist-modify-private%20playlist-modify-public&response_type=token";
 }
 
 function getRecommendations() {
@@ -190,8 +190,6 @@ function displayTracks(tracks) {
 
         songTitle[j].textContent = tracks[j].name;
         songArtist[j].textContent = tracks[j].artists[0].name;
-
-        //songs[j].textContent = "Song title: " + tracks[j].name + ", Artist: " + tracks[j].artists[0].name + " " + Math.round(data.audio_features[j].tempo);
         playButtons[j].addEventListener("click", function () {
           player.src = "https://open.spotify.com/embed/track/" + tracks[j].id;
           url = tracks[j].album.images[0].url;
