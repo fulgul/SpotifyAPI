@@ -37,6 +37,7 @@ html, body {
 .select{
   color: white;
   margin-top: 10px;
+  margin-bottom: 15px;
 }
 
 select,
